@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <string.h>
+
+struct Directory {
+    char fname[10][20];
+    int fcount;
+};
+
+int main() {
+    struct Directory dir;
+    dir.fcount = 0;
+    int choice;
+    char name[20];
+
+    while (1) {
+        printf("\n1. Create File\n2. Delete File\n3. Display Files\n4. Exit\nEnter your choice: ");
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1:
+                printf("Enter file name: ");
+                scanf("%s", name);
+                int found = 0;
+                for (int i = 0; i < dir.fcount; i++) {
+                    if (strcmp(name, dir.fname[i]) == 0) {
+                        found = 1;
+                        break;
+                    }
+                }
+                if (found)
+                    printf("File already exists.\n");
+                else {
+                    strcpy(dir.fname[dir.fcount], name);
+                    dir.fcount++;
+                    printf("File created.\n");
+                }
+                break;
+            case 2:
+                printf("Enter file name to delete: ");
+                scanf("%s", name);
+                found = 0;
+                for (int i = 0; i < dir.fcount; i++) {
+                    if (strcmp(name, dir.fname[i]) == 0) {
+                        for (int j = i; j < dir.fcount - 1; j++)
+                            strcpy(dir.fname[j], dir.fname[j+1]);
+                        dir.fcount--;
+                        found = 1;
+                        printf("File deleted.\n");
+                        break;
+                    }
+                }
+                if (!found) printf("File not found.\n");
+                break;
+            case 3:
+                if (dir.fcount == 0)
+                    printf("No files.\n");
+                else {
+                    printf("Files:\n");
+                    for (int i = 0; i < dir.fcount; i++)
+                        printf("%s\n", dir.fname[i]);
+                }
+                break;
+            case 4:
+                return 0;
+        }
+    }
+}
