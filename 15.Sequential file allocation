@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+struct File {
+    int startBlock;
+    int length;
+};
+
+int main() {
+    int memory[100] = {0}, i, j, n;
+    struct File files[10];
+
+    printf("Enter number of files: ");
+    scanf("%d", &n);
+
+    for(i = 0; i < n; i++) {
+        int start, len;
+        printf("Enter start block and length for file %d: ", i+1);
+        scanf("%d%d", &start, &len);
+        int allocated = 1;
+
+        for(j = start; j < start + len; j++) {
+            if(memory[j] == 1) {
+                allocated = 0;
+                break;
+            }
+        }
+
+        if(allocated) {
+            for(j = start; j < start + len; j++)
+                memory[j] = 1;
+            files[i].startBlock = start;
+            files[i].length = len;
+            printf("File %d allocated.\n", i+1);
+        } else {
+            printf("File %d cannot be allocated.\n", i+1);
+        }
+    }
+
+    return 0;
+}
