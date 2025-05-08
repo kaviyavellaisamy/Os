@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <string.h>
+
+struct File {
+    char name[20];
+};
+
+struct User {
+    char name[20];
+    struct File files[10];
+    int fileCount;
+};
+
+int main() {
+    struct User users[5];
+    int userCount = 0, choice;
+    char uname[20], fname[20];
+    int i, j;
+
+    while (1) {
+        printf("\n1. Create User\n2. Create File\n3. Display\n4. Exit\nEnter choice: ");
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1:
+                printf("Enter user name: ");
+                scanf("%s", uname);
+                strcpy(users[userCount].name, uname);
+                users[userCount].fileCount = 0;
+                userCount++;
+                break;
+            case 2:
+                printf("Enter user name: ");
+                scanf("%s", uname);
+                for (i = 0; i < userCount; i++) {
+                    if (strcmp(users[i].name, uname) == 0) {
+                        printf("Enter file name: ");
+                        scanf("%s", fname);
+                        strcpy(users[i].files[users[i].fileCount].name, fname);
+                        users[i].fileCount++;
+                        printf("File created.\n");
+                        break;
+                    }
+                }
+                if (i == userCount)
+                    printf("User not found.\n");
+                break;
+            case 3:
+                for (i = 0; i < userCount; i++) {
+                    printf("User: %s\n", users[i].name);
+                    for (j = 0; j < users[i].fileCount; j++)
+                        printf("  %s\n", users[i].files[j].name);
+                }
+                break;
+            case 4:
+                return 0;
+        }
+    }
+}
