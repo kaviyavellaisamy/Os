@@ -1,0 +1,31 @@
+#include <stdio.h>
+
+struct Block {
+    int data;
+    int next;
+};
+
+int main() {
+    struct Block file[20];
+    int start, end, n;
+
+    printf("Enter number of blocks: ");
+    scanf("%d", &n);
+
+    printf("Enter start and end block of file: ");
+    scanf("%d%d", &start, &end);
+
+    for (int i = start; i <= end; i++) {
+        file[i].data = i;
+        if (i != end)
+            file[i].next = i + 1;
+        else
+            file[i].next = -1;
+    }
+
+    printf("\nLinked Allocation:\nBlock -> Next\n");
+    for (int i = start; i != -1; i = file[i].next)
+        printf("%d -> %d\n", file[i].data, file[i].next);
+
+    return 0;
+}
