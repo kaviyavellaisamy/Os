@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
+void printPermissions(mode_t mode) {
+    printf("User: ");
+    printf((mode & S_IRUSR) ? "r" : "-");
+    printf((mode & S_IWUSR) ? "w" : "-");
+    printf((mode & S_IXUSR) ? "x" : "-");
+
+    printf(" | Group: ");
+    printf((mode & S_IRGRP) ? "r" : "-");
+    printf((mode & S_IWGRP) ? "w" : "-");
+    printf((mode & S_IXGRP) ? "x" : "-");
+
+    printf(" | Others: ");
+    printf((mode & S_IROTH) ? "r" : "-");
+    printf((mode & S_IWOTH) ? "w" : "-");
+    printf((mode & S_IXOTH) ? "x" : "-");
+
+    printf("\n");
+}
+
+int main() {
+    char filename[100];
+    struct stat fileStat;
+
+    printf("Enter the file name: ");
+    scanf("%s", filename);
+
+    if (stat(filename, &fileStat) < 0) {
+        perror("Error retrieving file info");
+        return 1;
+    }
+
+    printf("\nFile: %s\n", filename);
+    printf("Owner UID: %d\n", fileStat.st_uid);
+    printf("Group GID: %d\n", fileStat.st_gid);
+    printf("Permissions: ");
+    printPermissions(fileStat.st_mode);
+
+    return 0;
+}
