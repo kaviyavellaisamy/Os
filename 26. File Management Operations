@@ -1,0 +1,19 @@
+#include <stdio.h>
+
+int main() {
+    FILE *fp;
+    char str[100];
+
+    fp = fopen("file.txt", "w");
+    fprintf(fp, "Operating Systems File Handling\n");
+    fclose(fp);
+
+    fp = fopen("file.txt", "r");
+    fgets(str, 100, fp);
+    printf("Read from file: %s", str);
+    fclose(fp);
+
+    remove("file.txt"); // Deletes the file
+
+    return 0;
+}
