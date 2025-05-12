@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+int main() {
+    int files[10], start[10], length[10], n;
+
+    printf("Enter number of files: ");
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        printf("Enter start block and length of file %d: ", i + 1);
+        scanf("%d%d", &start[i], &length[i]);
+
+        for (int j = start[i]; j < start[i] + length[i]; j++)
+            files[j] = i + 1;
+    }
+
+    printf("\nFile Allocation Table:\n");
+    printf("File\tStart\tLength\n");
+    for (int i = 0; i < n; i++)
+        printf("%d\t%d\t%d\n", i + 1, start[i], length[i]);
+
+    return 0;
+}
